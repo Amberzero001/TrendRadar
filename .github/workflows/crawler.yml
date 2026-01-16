@@ -39,9 +39,6 @@ on:
 
   workflow_dispatch:
 
-concurrency:
-  group: crawler-${{ github.ref_name }}
-  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -122,8 +119,8 @@ jobs:
       - name: Install dependencies
         if: success()
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+          pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
       - name: Verify required files
         if: success()
@@ -168,4 +165,4 @@ jobs:
           S3_ENDPOINT_URL: ${{ secrets.S3_ENDPOINT_URL }}
           S3_REGION: ${{ secrets.S3_REGION }}
           GITHUB_ACTIONS: true
-        run: python -m trendradar
+          run: python main.py
